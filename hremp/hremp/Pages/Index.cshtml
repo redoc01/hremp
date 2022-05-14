@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+
+
+
+<div class="container">
+    <h2>Employee</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Employee Number</th>
+                    <th>DOB</th>
+                    <th>Department</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Models.Employee emp in Model.employeeList.OrderBy(x => x.FirstName).OrderBy(x => x.EmployeeNumber))
+                {
+
+                    var ctx = new Models.hremployeedbContext();
+
+
+
+                    <tr>
+                        <td>@emp.EmployeeNumber</td>
+                        <td>@ctx.Department.Where(x => x.Id == emp.DepartmentId).FirstOrDefault().Name</td>
+                        <td>@emp.Dob</td>
+                        <td>@emp.FirstName</td>
+                        <td>@emp.LastName</td>
+                        <td>@emp.Address</td>
+                        <td>@emp.City</td>
+                        <td><form asp-page-handler="delete" asp-route-id="@emp.EmployeeNumber" method="post"><button class="btn btn-default">Delete</button></form></td>
+                        <td><a href="#">Edit</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    
+            </div>
+
